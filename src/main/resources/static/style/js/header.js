@@ -146,7 +146,7 @@ $(".personalSpace").click(function () {
             if (data.status == 500) {
                 toLogin();
             }else{
-                if(name == "强子"){
+                if(name == "哥哥"){
                     messageNotReadMana();
                 }else{
                     messageNotReadUser();
@@ -303,7 +303,7 @@ $(function () {
  * @type {string}
  */
 //网站开始时间
-var siteBeginRunningTime = '2019-08-7 10:00:00';
+var siteBeginRunningTime = '2023-07-19 20:00:00';
 
 //网站运行时间
 //beginTime为建站时间的时间戳
@@ -345,7 +345,7 @@ setInterval(function () {
 
 
 //网站最后更新时间（版本更新需更改）
-var siteLastUpdateTime = '2019年09月2日12点';
+var siteLastUpdateTime = '2023年07月19日18点';
 $(".siteUpdateTime").html(''+siteLastUpdateTime);
 
 
