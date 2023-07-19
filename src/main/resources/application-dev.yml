@@ -1,8 +1,8 @@
 spring:
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://localhost/vblog?useSSL=FALSE&serverTimezone=UTC
+    password: 123456
+    url: jdbc:mysql://192.168.177.128/vblog?useSSL=FALSE&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
@@ -29,7 +29,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: 127.0.0.1
+    host: 192.168.177.128
     port: 6379
     password:
     jedis:
@@ -53,7 +53,7 @@ qiang:
   ########### session cache config
   ######################################
   shiro-redis:
-    host: 127.0.0.1
+    host: 192.168.177.128
     port: 6379
   ######## 文件路径
   file-path: /home/memo012/code/acblogMessage
