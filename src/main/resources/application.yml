@@ -4,7 +4,8 @@
 spring:
   # 环境 dev|test|prod
   profiles:
-    active: prod
+    active: @profiles.active@
+#    active: test
 
 #############################
 ###### mybatis-plus配置

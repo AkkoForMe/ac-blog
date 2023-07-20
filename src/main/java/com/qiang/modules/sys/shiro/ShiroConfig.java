@@ -1,6 +1,7 @@
 package com.qiang.modules.sys.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import io.netty.util.internal.StringUtil;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -39,6 +40,9 @@ public class ShiroConfig {
 
     @Value("${qiang.shiro-redis.port}")
     private Integer shiroRedisPort;
+
+    @Value("${qiang.shiro-redis.password}")
+    private String shiroRedisPassword;
 
 
     /**
@@ -106,6 +110,9 @@ public class ShiroConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(shiroRedisHost);
         redisManager.setPort(shiroRedisPort);
+        if (!StringUtil.isNullOrEmpty(shiroRedisPassword)) {
+            redisManager.setPassword(shiroRedisPassword);
+        }
         return redisManager;
     }
 

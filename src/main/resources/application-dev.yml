@@ -55,6 +55,7 @@ qiang:
   shiro-redis:
     host: 192.168.177.128
     port: 6379
+    password:
   ######## 文件路径
   file-path: /home/memo012/code/acblogMessage
   ######################################
@@ -69,9 +70,13 @@ qiang:
 ######################################
 logging:
   level:
-    root: warn
+    root: debug
     com.qiang.modules.sys.dao: trace
   pattern:
     console: '%p%m%n'
 
-
+#############################
+######## 网站端口
+#############################
+server:
+  port: 80
