@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>numtd to Excel Cell Position</title>
+    <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.2.min.js"></script>
+    <style>
+        /* 样式仅用于美化显示，不是必需的 */
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        .numtd {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+<table id="tab">
+    <thead>
+    <tr>
+        <th class="numtd">姓名</th>
+        <th>性别</th>
+        <th class="numtd">电话</th>
+        <th class="numtd">地址</th>
+        <th>邮箱</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="numtd" rowspan="3">A1</td>
+        <td>B1</td>
+        <td class="numtd">C1</td>
+        <td class="numtd">D1</td>
+        <td>E1</td>
+    </tr>
+    <tr>
+        <td class="numtd">B2</td>
+        <td colspan="2">C2</td>
+        <!-- <td class="numtd">D2</td> -->
+        <td class="numtd">E2</td>
+    </tr>
+    <tr>
+        <!-- <td class="numtd">A3</td> -->
+        <td colspan="2">B3</td>
+        <!-- <td class="numtd">C3</td> -->
+        <td class="numtd" rowspan="3">D3</td>
+        <td>E3</td>
+    </tr>
+    <tr>
+        <td>A4</td>
+        <td class="numtd">B4</td>
+        <td>C4</td>
+        <!-- <td class="numtd">D4</td> -->
+        <td class="numtd">E4</td>
+    </tr>
+    <tr>
+        <td class="numtd">A5</td>
+        <td>B5</td>
+        <td class="numtd">C5</td>
+        <!-- <td class="numtd">D5</td> -->
+        <td>E5</td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function getCellPosition(row, col) {
+
+        function getColumnName(col) {
+            let columnName = '';
+            while (col > 0) {
+                let remainder = col % 26;
+                if (remainder === 0) {
+                    remainder = 26;
+                    col -= 1;
+                }
+                columnName = String.fromCharCode(64 + remainder) + columnName;
+                col = Math.floor((col - 1) / 26);
+            }
+            return columnName;
+        }
+
+        const columnName = getColumnName(col);
+        const cellPosition = columnName + row;
+        return cellPosition;
+    }
+
+
+
+
+    var obj = {
+        rowName : "row",
+        colName : "col",
+        numClassName : "numtd",
+        startrow : 2
+    };
+
+    function initCell(obj) {
+        const result = {};
+        const hiddMaps = {};
+        const myCellPositions = [];
+        const startrow = obj.startrow;
+
+
+        let rownum = 1;
+        $("#tab tr").each(function (index) {
+
+            if (index + 1 < startrow) {
+                return true;
+            }
+            let rownumHidds = hiddMaps[rownum];
+            let colsum = 0;
+            if (rownumHidds) {
+                colsum += rownumHidds.length;
+            }
+
+            $(this).find("th,td").each(function () {
+                let colspan = $(this).prop("colspan");
+                if (colspan > 1) {
+                    colsum += (colspan - 1);
+                }
+                colsum++;
+            });
+
+            let ind = 0;
+            for (let y = 1; y <= colsum; y++) {
+                if (rownumHidds && rownumHidds.indexOf(y) > -1) {
+
+                } else {
+                    let $td = $(this).find("th,td").eq(ind);
+                    let colspan = $td.prop("colspan");
+                    if (colspan > 1) {
+                        for (let i = 1; i < colspan; i++) {
+                            rownumHidds.push(i + y);
+                            hiddMaps[rownum] = rownumHidds;
+                        }
+                    }
+
+                    let rowspan = $td.prop("rowspan");
+                    if (rowspan > 1) {
+                        for (let i = 1; i < rowspan; i++) {
+                            let ilist = hiddMaps[rownum + i];
+                            if (!ilist) {
+                                ilist = [];
+                            }
+                            ilist.push(y);
+                            hiddMaps[rownum + i] = ilist;
+                        }
+                    }
+
+                    ind++;
+
+
+                    let myrow = rownum;
+                    let mycol = y;
+                    let $mytd = $td;
+
+                    $mytd.attr(obj.rowName, myrow);
+                    $mytd.attr(obj.colName, mycol);
+
+                    if ($mytd.hasClass(obj.numClassName)) {
+                        const cellPosition = getCellPosition(myrow, mycol);
+                        myCellPositions.push(cellPosition);
+                    }
+
+
+                }
+            }
+
+            rownum++;
+        });
+
+        result.hiddMaps = hiddMaps;
+        result.myCellPositions = myCellPositions;
+        return result;
+    }
+
+    let result = initCell(obj);
+    console.log(result.hiddMaps);
+    console.log("myCellPositions");
+    console.log(result.myCellPositions);
+</script>
+
+
+</body>
+
+</html>

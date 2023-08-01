@@ -35,7 +35,7 @@ public class SMSService {
             SmsSingleSender ssender = new SmsSingleSender(SMSUtil.APPID, SMSUtil.APPKEY);
             SmsSingleSenderResult result = ssender.send(0, "86", number,
                     msg, "", "");
-            System.out.print(result);
+            System.out.print("38:"+result);
             return result.errMsg;
         } catch (HTTPException e) {
             // HTTP响应码错误
@@ -69,13 +69,13 @@ public class SMSService {
             SmsSingleSender ssender = new SmsSingleSender(SMSUtil.APPID, SMSUtil.APPKEY);
             if(mark == 0){
                 SmsSingleSenderResult result = ssender.sendWithParam("86", number,
-                        SMSUtil.SHORTNOTID, params, "", "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
-                System.out.print(result);
+                        SMSUtil.SHORTNOTID, params, SMSUtil.NOTESIGN, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
+                System.out.print("73:"+result);
                 return result.errMsg;//OK
             }else if(mark == 1){
                 SmsSingleSenderResult result = ssender.sendWithParam("86", number,
-                        SMSUtil.UPDPWDID, params, "", "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
-                System.out.print(result);
+                        SMSUtil.UPDPWDID, params, SMSUtil.NOTESIGN, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
+                System.out.print("78:"+result);
                 return result.errMsg;//OK
             }
         }catch (HTTPException e) {
@@ -103,7 +103,7 @@ public class SMSService {
             SmsMultiSender msender = new SmsMultiSender(SMSUtil.APPID, SMSUtil.APPKEY);
             SmsMultiSenderResult result =  msender.send(0, "86", numbers,
                     msg, "", "");
-            System.out.print(result);
+            System.out.print("106:"+result);
             return result.errMsg;
         } catch (HTTPException e) {
             // HTTP响应码错误
@@ -129,7 +129,7 @@ public class SMSService {
             SmsMultiSender msender = new SmsMultiSender(SMSUtil.APPID, SMSUtil.APPKEY);
             SmsMultiSenderResult result =  msender.sendWithParam("86", numbers,
                     SMSUtil.SHORTNOTID, params, SMSUtil.NOTESIGN, "", "");  // 签名参数未提供或者为空时，会使用默认签名发送短信
-            System.out.print(result);
+            System.out.print("132:"+result);
             return result.errMsg;
         } catch (HTTPException e) {
             // HTTP响应码错误
@@ -156,7 +156,7 @@ public class SMSService {
             SmsVoiceVerifyCodeSender vvcsender = new SmsVoiceVerifyCodeSender(SMSUtil.APPID, SMSUtil.APPKEY);
             SmsVoiceVerifyCodeSenderResult result = vvcsender.send("86",number,
                     msg, 2, "");
-            System.out.print(result);
+            System.out.print("159:"+result);
             return result.errMsg;
         } catch (HTTPException e) {
             // HTTP响应码错误
